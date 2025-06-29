@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tiny-http-probe
+  labels:
+    app: tiny-http-probe
+spec:
+  selector:
+    matchLabels:
+      app: tiny-http-probe
+  template:
+    metadata:
+      labels:
+        app: tiny-http-probe
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: tiny-http-probe
+        image: infrabuilder/tiny-http-probe:latest
+        ports:
+        - name: http
+          containerPort: 8080
+        securityContext:
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          runAsUser: 1000
+          runAsGroup: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "64Mi"
