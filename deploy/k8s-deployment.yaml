@@ -39,3 +39,17 @@ spec:
             cpu: "50m"
           limits:
             memory: "64Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tiny-http-probe
+spec:
+  type: LoadBalancer
+  selector:
+    app: tiny-http-probe
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
