@@ -3,7 +3,7 @@ name: ci
 on:
   push:
   schedule:
-    - cron: '5 4 * * 0'
+    - cron: '5 20 * * 0'
 
 env:
   IMAGE_NAME: infrabuilder/tiny-http-probe
